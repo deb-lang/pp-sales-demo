@@ -347,10 +347,15 @@ button.channel-card:active {
 /* Phone mockup — embeds brand-ad-phone.html bundle as iframe srcdoc.
    Bundle renders an iPhone-style ad at fixed dimensions; iframe is held
    at natural 520×1100 and absolute-positioned + scaled to center inside
-   the slide container. */
+   the slide container.
+
+   DEBUG: red outline on container + bright pink iframe bg so we can see
+   if the iframe is mounting; remove after diagnosing. */
 .mockup-phone {
   overflow: visible;
   background: transparent;
+  outline: 2px dashed #ff3366;
+  outline-offset: -2px;
 }
 
 .mockup-phone .phone-frame {
@@ -360,11 +365,8 @@ button.channel-card:active {
   width: 520px;
   height: 1100px;
   border: 0;
-  background: transparent;
+  background: #ffe1ee; /* DEBUG */
   display: block;
-  /* Container ~201.6px wide on the 1440×900 canvas. Phone needs ~520px
-     of room internally; scale shrinks the full bundle output to ~37%
-     so the rendered phone fits the column. */
   transform: translate(-50%, -50%) scale(0.39);
   transform-origin: center center;
   pointer-events: none;
@@ -1272,8 +1274,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     const style = doc.createElement("style");
     style.id = "__pp_inject";
     style.textContent = `
-      #__bundler_err, #__bundler_loading, #__bundler_thumbnail { display: none !important; }
+      /* DEBUG: leaving loading + error overlays visible to diagnose phone bundle */
+      #__bundler_thumbnail { display: none !important; }
       html, body { overflow: hidden !important; background: transparent !important; }
+      #__bundler_err, #__bundler_loading {
+        font-size: 9px !important;
+        padding: 4px 6px !important;
+        max-width: 480px !important;
+      }
     `;
     (doc.head || doc.documentElement).appendChild(style);
   }
