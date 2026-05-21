@@ -347,15 +347,10 @@ button.channel-card:active {
 /* Phone mockup — embeds brand-ad-phone.html bundle as iframe srcdoc.
    Bundle renders an iPhone-style ad at fixed dimensions; iframe is held
    at natural 520×1100 and absolute-positioned + scaled to center inside
-   the slide container.
-
-   DEBUG: red outline on container + bright pink iframe bg so we can see
-   if the iframe is mounting; remove after diagnosing. */
+   the slide container. */
 .mockup-phone {
   overflow: visible;
   background: transparent;
-  outline: 2px dashed #ff3366;
-  outline-offset: -2px;
 }
 
 .mockup-phone .phone-frame {
@@ -365,7 +360,7 @@ button.channel-card:active {
   width: 520px;
   height: 1100px;
   border: 0;
-  background: #ffe1ee; /* DEBUG */
+  background: transparent;
   display: block;
   transform: translate(-50%, -50%) scale(0.39);
   transform-origin: center center;
@@ -1276,14 +1271,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     const style = doc.createElement("style");
     style.id = "__pp_inject";
     style.textContent = `
-      /* DEBUG: leaving loading + error overlays visible to diagnose phone bundle */
-      #__bundler_thumbnail { display: none !important; }
+      #__bundler_thumbnail,
+      #__bundler_loading,
+      #__bundler_err { display: none !important; }
       html, body { overflow: hidden !important; background: transparent !important; }
-      #__bundler_err, #__bundler_loading {
-        font-size: 9px !important;
-        padding: 4px 6px !important;
-        max-width: 480px !important;
-      }
     `;
     (doc.head || doc.documentElement).appendChild(style);
   }
