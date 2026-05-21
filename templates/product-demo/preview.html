@@ -333,7 +333,7 @@ button.channel-card:active {
      (The original #E9EEF2 body bg is also patched to transparent at inline
      time in scripts/preview-product-demo.mjs as belt-and-suspenders.) */
   width: 850px;
-  height: 1240px;
+  height: 1340px;
   border: 0;
   background: transparent;
   display: block;
@@ -344,27 +344,28 @@ button.channel-card:active {
 }
 
 /* Phone mockup — embeds brand-ad-phone.html bundle as iframe srcdoc.
-   Bundle renders an iPhone-style ad at its own dimensions; we hold the
-   iframe at a fixed natural size and CSS-scale to fit the slide container. */
+   Bundle renders an iPhone-style ad at fixed dimensions; iframe is held
+   at natural 520×1100 and absolute-positioned + scaled to center inside
+   the slide container. */
 .mockup-phone {
-  overflow: hidden;
+  overflow: visible;
   background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .mockup-phone .phone-frame {
-  /* Natural phone-bundle viewport — generous so the React app lays out
-     without horizontal overflow. Scale factor below shrinks to container. */
-  width: 480px;
-  height: 980px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 520px;
+  height: 1100px;
   border: 0;
   background: transparent;
   display: block;
-  /* Container ~201.6px wide on the 1440×900 canvas (14%); scale = 201.6/480. */
-  transform: scale(0.42);
-  transform-origin: top center;
+  /* Container ~201.6px wide on the 1440×900 canvas. Phone needs ~520px
+     of room internally; scale shrinks the full bundle output to ~37%
+     so the rendered phone fits the column. */
+  transform: translate(-50%, -50%) scale(0.39);
+  transform-origin: center center;
   pointer-events: none;
 }
 
@@ -458,15 +459,16 @@ button.channel-card:active {
         "Structured touchpoints across the first 90 days of therapy",
         "Real-world adherence reporting back to your team",
       ],
-      patientPhotoUrl: "assets/placeholder-patient.svg",
-      mentorPhotoUrl: "assets/placeholder-mentor.svg",
-      logoUrl: "assets/placeholder-brand-logo.svg",
+      // Placeholder images are inlined as data: URLs so they resolve inside
+      // srcdoc iframes too (relative paths have no base URL in srcdoc).
+      // AI generator overrides each with brand-specific image URLs at generate-time.
+      patientPhotoUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHJ4PSIxMiIgZmlsbD0iI0UzRkZGRiIvPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzNCIgZmlsbD0iIzlBRERFMCIvPgogIDxwYXRoIGQ9Ik00MCAxODAgUTQwIDEyMCAxMDAgMTIwIFExNjAgMTIwIDE2MCAxODAgWiIgZmlsbD0iIzlBRERFMCIvPgogIDx0ZXh0IHg9IjEwMCIgeT0iMTk1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSEtHcm90ZXNrLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjNDE5REE1Ij5QYXRpZW50IHBob3RvPC90ZXh0Pgo8L3N2Zz4K",
+      mentorPhotoUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHJ4PSIxMiIgZmlsbD0iI0Q4RURFRSIvPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzNCIgZmlsbD0iIzcyQ0JDRiIvPgogIDxwYXRoIGQ9Ik00MCAxODAgUTQwIDEyMCAxMDAgMTIwIFExNjAgMTIwIDE2MCAxODAgWiIgZmlsbD0iIzcyQ0JDRiIvPgogIDx0ZXh0IHg9IjEwMCIgeT0iMTk1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSEtHcm90ZXNrLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjExIiBmaWxsPSIjMTgzODU3Ij5NZW50b3IgcGhvdG88L3RleHQ+Cjwvc3ZnPgo=",
+      logoUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDAgODAiIHdpZHRoPSIyNDAiIGhlaWdodD0iODAiPgogIDxyZWN0IHdpZHRoPSIyNDAiIGhlaWdodD0iODAiIHJ4PSIxMCIgZmlsbD0iI0UzRkZGRiIgc3Ryb2tlPSIjNjVDMEM0IiBzdHJva2UtZGFzaGFycmF5PSI0IDQiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHRleHQgeD0iMTIwIiB5PSI0OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkhLR3JvdGVzaywgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIyMCIgZmlsbD0iIzQxOURBNSI+QnJhbmQgTG9nbzwvdGV4dD4KPC9zdmc+Cg==",
       // tofImageUrl: client website Top-of-Funnel screenshot, uploaded per-brand at intake.
-      // Falls back to the generic mock until the brand has one.
-      tofImageUrl: "assets/channel-direct-to-patient.svg",
+      tofImageUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMjgwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjI4MCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgc2xpY2UiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJkdHBCZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMEY2QjY4Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBBNEY0RCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyODAiIGZpbGw9InVybCgjZHRwQmcpIi8+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyMiIgZmlsbD0iI0ZGRkZGRiIvPgogIDx0ZXh0IHg9IjE0IiB5PSIxNSIgZm9udC1mYW1pbHk9IkhLR3JvdGVzaywgc2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzBFNUY1RCI+W0JyYW5kXTwvdGV4dD4KICA8dGV4dCB4PSI3OCIgeT0iMTUiIGZvbnQtZmFtaWx5PSJIS0dyb3Rlc2ssIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzdCN0M4RiI+SW5kaWNhdGlvbiAgUEkgIE1lZCBHdWlkZSAgSVNJICBIQ1BzPC90ZXh0PgogIDx0ZXh0IHg9IjIyIiB5PSI3NCIgZm9udC1mYW1pbHk9IkhLR3JvdGVzaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5IiBmaWxsPSIjOUNEM0QxIj5JbnRyb2R1Y2luZzwvdGV4dD4KICA8dGV4dCB4PSIyMiIgeT0iOTgiIGZvbnQtZmFtaWx5PSJIS0dyb3Rlc2ssIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiNGRkZGRkYiPkZEQS1hcHByb3ZlZDwvdGV4dD4KICA8dGV4dCB4PSIyMiIgeT0iMTIwIiBmb250LWZhbWlseT0iSEtHcm90ZXNrLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjIwIiBmaWxsPSIjRkZGRkZGIj5bQlJBTkRdPC90ZXh0PgogIDx0ZXh0IHg9IjIyIiB5PSIxNDYiIGZvbnQtZmFtaWx5PSJIS0dyb3Rlc2ssIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iI0M5RThFNyI+RkRBLUFwcHJvdmVkIFRyZWF0bWVudDwvdGV4dD4KICA8Y2lyY2xlIGN4PSIzMDYiIGN5PSIxNDYiIHI9IjY0IiBmaWxsPSIjRTVCRkEwIi8+Cjwvc3ZnPgo=",
       // tvImageUrl: image shown ON the TV in slide 3 (the patient/caregiver scene).
-      // Per-brand: uploaded at intake. Falls back to a generic caregiver mock.
-      tvImageUrl: "assets/placeholder-tv-image.svg",
+      tvImageUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MjggMjg0IiB3aWR0aD0iNTI4IiBoZWlnaHQ9IjI4NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgc2xpY2UiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRDhFREVFIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzlBRERFMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjUyOCIgaGVpZ2h0PSIyODQiIGZpbGw9InVybCgjYmcpIi8+CiAgPCEtLSBwYXRpZW50ICsgY2FyZWdpdmVyIHNpbGhvdWV0dGVzIC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0MCA2MCkiPgogICAgPGNpcmNsZSBjeD0iNjAiIGN5PSI1MCIgcj0iMzYiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9IjAuODUiLz4KICAgIDxwYXRoIGQ9Ik0xMCAxODAgUTEwIDExMCA2MCAxMTAgUTExMCAxMTAgMTEwIDE4MCBaIiBmaWxsPSIjRkZGRkZGIiBvcGFjaXR5PSIwLjg1Ii8+CiAgPC9nPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2MCA1MCkiPgogICAgPGNpcmNsZSBjeD0iNjAiIGN5PSI0NiIgcj0iMzIiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9IjAuNyIvPgogICAgPHBhdGggZD0iTTE0IDE5MCBRMTQgMTIwIDYwIDEyMCBRMTA2IDEyMCAxMDYgMTkwIFoiIGZpbGw9IiNGRkZGRkYiIG9wYWNpdHk9IjAuNyIvPgogIDwvZz4KICA8dGV4dCB4PSIyNjQiIHk9IjI2MiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkhLR3JvdGVzaywgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzMxNEQ2OSIgb3BhY2l0eT0iMC43Ij4KICAgIFBhdGllbnQgKyBjYXJlZ2l2ZXIgc2NlbmUKICA8L3RleHQ+Cjwvc3ZnPgo=",
       // ctvSafetyText: per-brand ISI / fair-balance line overlaid on the CTV ad.
       // Pulled from the brand's approved safety language at intake.
       ctvSafetyText: "Tell your doctor immediately if you develop puffiness in your face, changes in urine, swelling of your stomach area and feeling of fullness or dizziness or feeling fainting.",
@@ -582,7 +584,7 @@ button.channel-card:active {
              Container width:34% × height:79% matches the bundle's .flyer page
              aspect (850×1240) against the 1440×900 canvas, px-correct.
              Iframe is held at 850×1240 and CSS-scaled by 0.576. -->
-        <div class="mockup mockup-flyer" style="left:3%; top:8%; width:34%; height:79%;">
+        <div class="mockup mockup-flyer" style="left:3%; top:3%; width:34%; height:86%;">
           <iframe class="flyer-frame" srcdoc="<!DOCTYPE html>
 <html>
 <head>
@@ -1036,7 +1038,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           </div>
         </div>
 
-        <button class="hotspot pulse" data-next="4" style="left:42%; top:90%; width:16%;">CONTINUE</button>
+        <button class="hotspot pulse" data-next="4" style="left:42%; top:92%; width:16%;">CONTINUE</button>
 
       </section>
 

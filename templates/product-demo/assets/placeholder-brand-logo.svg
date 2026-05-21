@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" width="240" height="80">
+  <rect width="240" height="80" rx="10" fill="#E3FFFF" stroke="#65C0C4" stroke-dasharray="4 4" stroke-width="1.5"/>
+  <text x="120" y="48" text-anchor="middle" font-family="HKGrotesk, sans-serif" font-weight="700" font-size="20" fill="#419DA5">Brand Logo</text>
+</svg>
