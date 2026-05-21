@@ -524,8 +524,10 @@ button.channel-card:active {
           PatientPartner
         </div>
 
-        <!-- "SEE IN ACTION" — animated CTA hotspot -->
-        <button class="hotspot pulse" data-next="2" style="left:42%; top:82%; width:16%;">SEE IN ACTION</button>
+        <!-- "SEE IN ACTION" — animated CTA hotspot.
+             Width 22% (~317px) wide enough for the bold text + padding so
+             it sits on one line; nowrap on .hotspot is belt-and-suspenders. -->
+        <button class="hotspot pulse" data-next="2" style="left:39%; top:82%; width:22%;">SEE IN ACTION</button>
 
       </section>
 
